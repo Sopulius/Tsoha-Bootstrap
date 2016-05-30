@@ -17,16 +17,16 @@
            
   });
   
-  $routes->get('osastot/musiikki', function() {
+  $routes->get('/osastot/musiikki', function() {
    HelloWorldController::section_show();
            
   });
    
-  $routes->get('osastot/musiikki/1', function() {
+  $routes->get('/osastot/musiikki/1', function() {
    HelloWorldController::product_show();        
   });
   
     
-  $routes->get('osastot/musiikki/1/edit', function() {
+  $routes->get('/osastot/musiikki/1/edit', function() {
    HelloWorldController::product_edit();       
   });
