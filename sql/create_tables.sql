@@ -7,6 +7,7 @@ CREATE TABLE Section(
 CREATE TABLE Product(
     id SERIAL PRIMARY KEY,
     sectionId INTEGER REFERENCES Section(id),
+    name varchar(50) NOT NULL,
     startPrice NUMERIC NOT NULL,
     description varchar(300) NOT NULL
 );
