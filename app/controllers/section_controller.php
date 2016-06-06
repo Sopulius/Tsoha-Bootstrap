@@ -14,7 +14,7 @@ class SectionController extends BaseController{
     }
     
     public static function displaySection($id){
-       $view = SectionView::create($id);
+       $view = SectionViewModel::find($id);
        Kint::dump($view);
        View::make('section/display.html', array('view'=>$view));
     }
@@ -32,6 +32,6 @@ class SectionController extends BaseController{
         
         $section->save();
         
-        Redirect::to('/section/'.$section->id, array('message' => 'Uusi osasto lisätty'));
+        Redirect::to('/section/'.$section->id, array('message' => 'Uusi osasto lisätty!'));
     }
 }

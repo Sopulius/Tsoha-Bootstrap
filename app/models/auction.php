@@ -51,7 +51,7 @@ class Auction extends BaseModel {
         return null;
     }
 
-    public static function auctionsInSection($id) {
+    public static function allInSection($id) {
         $query = DB::connection()->prepare('SELECT * FROM Auction WHERE sectionid= :id');
         $query->execute(array('id' => $id));
 

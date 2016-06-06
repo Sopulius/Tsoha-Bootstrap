@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-class AuctionListView extends BaseModel {
+class AuctionListViewModel extends BaseModel {
 
     public $auction, $product, $highestBid;
 
@@ -16,12 +16,12 @@ class AuctionListView extends BaseModel {
 
     public static function allInSection($id) {
         $listView = array();
-        $auctions = Auction::auctionsInSection($id);
+        $auctions = Auction::allInSection($id);
         if (!empty($auctions)) {
             foreach ($auctions as $auc) {
                 $prod = Product::find($auc->productId);
                 array_push($listView, 
-                     new AuctionListView(array('auction' => $auc,
+                     new AuctionListViewModel(array('auction' => $auc,
                     'product' => $prod,
                     'highestBid' => null)));
             }

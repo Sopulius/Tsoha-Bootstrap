@@ -1,6 +1,16 @@
 
 {% extends "base.html" %}
 {% block content %}
+<p>
+    <a href="{{base_path}}/section" class ="btn btn-primary">Takaisin</a>
+</p>
+
+{%if message%}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{%endif%}
+
   <h1>{{view.section.name}}</h1>
   
   <p>

@@ -6,17 +6,17 @@
  * and open the template in the editor.
  */
 
-class SectionView extends BaseModel{
+class SectionViewModel extends BaseModel{
     public $section, $auctionList;
     
     public function __construct($attributes = null) {
         parent::__construct($attributes);
     }
     
-    public static function create($sectionId){
-        $sec = Section::find($sectionId);
-        $auctions = AuctionListView::allInSection($sectionId);
-        return new SectionView(array('section'=>$sec,
+    public static function find($id){
+        $sec = Section::find($id);
+        $auctions = AuctionListViewModel::allInSection($id);
+        return new SectionViewModel(array('section'=>$sec,
             'auctionList'=>$auctions));
     }
 }
