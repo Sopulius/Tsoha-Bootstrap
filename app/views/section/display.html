@@ -33,7 +33,12 @@
                     <td>{{object.auction.startDate}} </td>
                     <td>{{object.auction.endDate}} </td>
                     <td>{{object.product.startPrice}}</td>
-                    <td>-</td>
+                    <td>{%if object.highestBid%}
+                            {{object.highestBid.price}}
+                        {%else%}
+                            <p>-</p
+                        {%endif%}
+                    </td>
                 </tr>
             {% endfor %}
           {%else%}

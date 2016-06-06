@@ -1,9 +1,11 @@
 <?php
 
+  //Etusivu
   $routes->get('/', function() {
     HelloWorldController::index();
   });
   
+  //Osastot
   $routes->post('/section', function(){
       SectionController::store();
   });
@@ -19,6 +21,8 @@
   $routes->get('/section/:id', function($id){
       SectionController::displaySection($id);
   });
+  
+  //suunnitelmat
 
   $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
