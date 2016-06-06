@@ -6,7 +6,6 @@ CREATE TABLE Section(
 
 CREATE TABLE Product(
     id SERIAL PRIMARY KEY,
-    sectionId INTEGER REFERENCES Section(id),
     name varchar(50) NOT NULL,
     startPrice NUMERIC NOT NULL,
     description varchar(300) NOT NULL
@@ -23,10 +22,11 @@ CREATE TABLE Customer(
 
 CREATE TABLE Auction(
     id SERIAL PRIMARY KEY,
+    sectionId INTEGER REFERENCES Section(id),
     customerId INTEGER REFERENCES Customer(id),
     productId INTEGER REFERENCES Product(id),
-    startDate DATE,
-    endDate DATE
+    startDate DATE DEFAULT CURRENT_DATE,
+    endDate DATE DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE Invoice(

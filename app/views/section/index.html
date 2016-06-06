@@ -1,11 +1,10 @@
-
 {% extends "base.html" %}
 
 {% block content %}
   <h1>Osastot</h1>
   
   <p>
-      <a href="#" class ="btn btn-success">Lisää osasto</a>
+      <a href="{{base_path}}/section/new" class ="btn btn-success">Lisää osasto</a>
   </p>
   
   <table class="table table-striped table-responsive">
@@ -14,10 +13,12 @@
         <th></th>
       </thead>
       <tbody>
+          {% for section in sections %}
           <tr>
-              <td><a href="osastot/musiikki">Musiikki</a></td>
+              <td><a href="{{base_path}}/section/{{section.id}}">{{section.name}}</a></td>
               <td><button type=""button" class="btn btn-danger">Poista</button></td>
           </tr>
+          {% endfor %}
       </tbody>
   </table>
 

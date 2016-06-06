@@ -3,6 +3,22 @@
   $routes->get('/', function() {
     HelloWorldController::index();
   });
+  
+  $routes->post('/section', function(){
+      SectionController::store();
+  });
+  
+  $routes->get('/section', function(){
+      SectionController::index();
+  });
+  
+  $routes->get('/section/new', function(){
+      SectionController::create();
+  });
+  
+  $routes->get('/section/:id', function($id){
+      SectionController::displaySection($id);
+  });
 
   $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
