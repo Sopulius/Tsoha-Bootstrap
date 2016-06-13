@@ -18,7 +18,7 @@ class SectionController extends BaseController{
        View::make('section/display.html', array('view'=>$view));
     }
     
-    public static function create(){
+    public static function newSection(){
         View::make('section/new.html');
     }
     

@@ -25,8 +25,8 @@ CREATE TABLE Auction(
     sectionId INTEGER REFERENCES Section(id),
     customerId INTEGER REFERENCES Customer(id),
     productId INTEGER REFERENCES Product(id),
-    startDate DATE DEFAULT CURRENT_DATE,
-    endDate DATE DEFAULT CURRENT_DATE
+    startDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    endDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Invoice(
@@ -37,5 +37,6 @@ CREATE TABLE Invoice(
 Create TABLE Bid(
     customerId INTEGER REFERENCES Customer(id),
     auctionId INTEGER REFERENCES Auction(id),
+    bidDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     price NUMERIC NOT NULL
 );

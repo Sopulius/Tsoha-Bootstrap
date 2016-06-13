@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+{%if message%}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{%endif%}
+  <h1>{{view.product.name}}</h1>
+  <!-- Painikkeet tähän -->
+  <p>
+    <button class="btn btn-danger">Poista</button> <a href="#" class="btn btn-default">Muokkaa</a>
+  </p>
+  <!-- Tiedot tulee listana tähän -->
+  <ul>
+   
+    <li><strong>Myyjä:</strong><a href="#" > {{view.seller.name}}</a></li>
+    <li><strong>Lisäyspäivä:</strong> {{view.auction.startDate}}</li>
+    <li><strong>Sulkeutuu:</strong> {{view.auction.endDate}}</li>
+    <li><strong>Aloitushinta:</strong> {{view.product.startPrice}}€</li>
+    <li><strong>Korkein tarjous:</strong> {{view.bids[0].price}}€</li>
+  </ul>
+  
+  <form>
+      <div class ="form-group">
+       <button type="submit" class="btn btn-default">Tarjoa</button>
+       <input type="text" name="tarjous" maxlength="6" size="6">
+      </div>
+  </form>
+  
+  <!-- Kuvaus tulee tähän -->
+  <div class="panel panel-default">
+      <div class="panel-heading" >
+          <h3 class="panel-title">Kuvaus</h3>
+      </div>
+      <div class="panel panel-body">
+          {{view.product.description}}
+      </div>
+  </div>
+  <!-- Tarjoukset -->
+   <div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+        <a data-toggle="collapse" href="#collapse1">Tarjoukset</a>
+        </h3>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse">
+        <table class="table table-striped table-responsive">
+            <thead>
+                
+                <th>
+                  Nimi
+                </th>
+                <th>
+                  Tarjous
+                </th>
+                <th>
+                  Pvm
+                </th>
+                
+            </thead>
+            <tbody>
+                
+                {%for bid in view.bids%}
+                <tr>
+                    <td>
+                       {{bid.customerId}}
+                    </td>
+                    <td>
+                       {{bid.price}}€ 
+                    </td>
+                    <td>
+                       {{bid.bidDate}}
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+      <div class="panel-footer"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

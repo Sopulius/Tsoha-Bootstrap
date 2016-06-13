@@ -75,5 +75,16 @@ class Auction extends BaseModel {
         
         return null;
     }
+    
+    public function save(){
+        $query = DB::connection()->prepare("INSERT INTO Auction(enddate,customerid,productid,sectionid) VALUES (localtimestamp + interval ' 24 hours' * :enddate ,:customerid, :productid, :sectionid) RETURNING id");
+        $query->execute(array(
+            'enddate'=>$this->endDate,
+            'customerid'=>$this->customerId,
+            'productid'=>$this->productId,
+            'sectionid'=>$this->sectionId));
+        $row = $query->fetch();
+        $this->id = $row['id'];
+    }
 
 }
