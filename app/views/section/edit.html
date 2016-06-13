@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Lisää uusi Osasto</h1>
+<h1>Muokkaa osastoa</h1>
 
 {% if errors %}
     <div class="alert alert-danger">
@@ -12,15 +12,13 @@
     </div>
 {% endif %}
 
-
-
-<form method="post" action="{{base_path}}/section">
+<form method="post" action="{{base_path}}/section/{{attributes.id}}/edit">
     <div class="form-group">
         <label>Nimi</label>
-        <input name="name" class="form-control" type="text">
+        <input name="name" class="form-control" type="text">{{attributes.name}}</input>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Lisää</button>
+        <button type="submit" class="btn btn-primary">Lähetä</button>
     </div>
 </form>
 {% endblock %}

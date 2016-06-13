@@ -20,10 +20,24 @@
       $errors = array();
 
       foreach($this->validators as $validator){
-        // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
+          $validatorErrors = $this->{$validator}();
+          $errors = array_merge($errors, $validatorErrors);
+        
       }
 
       return $errors;
+    }
+    
+    public function validate_string_length($string, $min, $max){
+        $errors = array();
+        if($string ==''||$string == null){
+            $errors[] = 'Kenttä ei saa olla tyhjä';
+        }
+        if(strlen($string)<$min || strlen($string)>$max){
+            $errors[] = 'Merkkijonon pituuden tulee olla välillä ' .$min.'-' .$max;
+        }
+        
+        return $errors;
     }
 
   }

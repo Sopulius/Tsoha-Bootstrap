@@ -14,12 +14,18 @@
       <thead>
         <th>Nimi</th>
         <th></th>
+        <th></th>
       </thead>
       <tbody>
           {% for section in sections %}
           <tr>
               <td><a href="{{base_path}}/section/{{section.id}}">{{section.name}}</a></td>
-              <td><button type=""button" class="btn btn-danger">Poista</button></td>
+              <td>
+                  <form method="post" action="{{base_path}}/section/{{section.id}}/destroy" style="display: inline-block;">
+                      <button type="submit" class="btn btn-danger">Poista</button>
+                  </form>
+              </td>
+              <td><a href="{{base_path}}/section/{{section.id}}/edit" class="btn btn-default">Muokkaa</a></td>
           </tr>
           {% endfor %}
       </tbody>

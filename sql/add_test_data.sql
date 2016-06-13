@@ -1,6 +1,7 @@
 -- Lisää INSERT INTO lauseet tähän tiedostoon
 INSERT INTO Customer (name, password, address, phone, email) VALUES('Pekka', 123456, 'Helsinki 00600', 12354, 'pekka@gmail.com');
 INSERT INTO Customer (name, password, address, phone, email) VALUES('Pena', 123456, 'Tammela 31300', 00002, 'Pena@hotmail.com');
+INSERT INTO Customer (name, password) VALUES('admin', 'qwerty');
 INSERT INTO Section  (name) VALUES('Musiikki');
 INSERT INTO Section  (name) VALUES('Pelit');
 INSERT INTO Product  (name, startPrice, description)    VALUES('Sähkökitara',500,'Hyvä kitara');

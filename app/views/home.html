@@ -4,8 +4,20 @@
   <div class="page-header">
     <h1>Tervetuloa Huutokauppaan!</h1>
   </div>
+{% if user_logged_in %}
+    <p>Kirjautuneena käyttäjänä {{user_logged_in.name}}</p>
+{% endif %}
+
+{%if message%}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{%endif%}
 
   <p>
     <a href="{{base_path}}/section" class="btn btn-primary btn-lg">Osastot <span class="glyphicon glyphicon-chevron-right"></span></a>
+  </p>
+  <p>
+    <a href="{{base_path}}/login" class="btn btn-primary btn-lg">Kirjaudu sisään <span class="glyphicon glyphicon-chevron-right"></span></a>
   </p>
 {% endblock %}
