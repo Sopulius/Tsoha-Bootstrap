@@ -15,11 +15,24 @@
   });
   
   $routes->get('/section/new', function(){
-      SectionController::create();
+      SectionController::newSection();
   });
   
   $routes->get('/section/:id', function($id){
       SectionController::displaySection($id);
+  });
+  
+  //Huutokaupat
+  $routes->post('/auction', function(){
+      AuctionController::store();
+  });
+  
+  $routes->get('/auction/new', function(){
+      AuctionController::newAuction();
+  });
+  
+  $routes->get('/auction/:id', function($id){
+      AuctionController::displayAuction($id);
   });
   
   //suunnitelmat

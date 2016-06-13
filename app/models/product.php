@@ -45,6 +45,16 @@ class Product extends BaseModel{
         return null;
        
     }
+    
+    public function save(){
+        $query = DB::connection()->prepare('INSERT INTO Product(name,description,startprice) VALUES (:name,:description,:startprice) RETURNING id');
+        $query->execute(array(
+            'name' => $this->name,
+            'description'=>$this->description,
+            'startprice'=>$this->startPrice));
+        $row = $query->fetch();
+        $this->id = $row['id'];
+    }
    
 }
 

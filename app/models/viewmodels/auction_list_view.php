@@ -20,10 +20,11 @@ class AuctionListViewModel extends BaseModel {
         if (!empty($auctions)) {
             foreach ($auctions as $auc) {
                 $prod = Product::find($auc->productId);
+                $bid = Bid::findHighestBid($id);
                 array_push($listView, 
                      new AuctionListViewModel(array('auction' => $auc,
                     'product' => $prod,
-                    'highestBid' => null)));
+                    'highestBid' => $bid)));
             }
             return $listView;
         }

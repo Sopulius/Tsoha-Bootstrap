@@ -15,11 +15,10 @@ class SectionController extends BaseController{
     
     public static function displaySection($id){
        $view = SectionViewModel::find($id);
-       Kint::dump($view);
        View::make('section/display.html', array('view'=>$view));
     }
     
-    public static function create(){
+    public static function newSection(){
         View::make('section/new.html');
     }
     
