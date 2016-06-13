@@ -7,7 +7,7 @@ Yleisiä linkkejä:
 * [Suunniteltujen näkymien linkit](https://github.com/Sopulius/Tsoha-Bootstrap/blob/master/doc/suunnitelmat.md)
 
 Testitunnus:
-* Käyttäjänimi: Pena
+* Käyttäjänimi: Pekka
 * Salasana: 123456
 
 ## Työn aihe
