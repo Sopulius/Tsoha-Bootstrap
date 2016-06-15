@@ -29,7 +29,7 @@ class AuctionController extends BaseController{
         $product->save();
         
         $auction = new Auction(array(
-            'customerId'=>1,
+            'customerId'=> $_SESSION['customer'],
             'sectionId'=>$params['section'],
             'productId'=>$product->id,
             'endDate'=>$params['days']

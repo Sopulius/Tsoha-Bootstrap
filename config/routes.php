@@ -15,6 +15,10 @@ $routes->post('/login', function() {
     CustomerController::handle_login();
 });
 
+$routes->post('/logout', function(){
+  CustomerController::logout();
+});
+
 //Osastot
 $routes->post('/section', function() {
     SectionController::store();

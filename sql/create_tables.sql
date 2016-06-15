@@ -22,9 +22,9 @@ CREATE TABLE Customer(
 
 CREATE TABLE Auction(
     id SERIAL PRIMARY KEY,
-    sectionId INTEGER REFERENCES Section(id),
+    sectionId INTEGER REFERENCES Section(id) ON DELETE CASCADE,
     customerId INTEGER REFERENCES Customer(id),
-    productId INTEGER REFERENCES Product(id),
+    productId INTEGER REFERENCES Product(id) ON DELETE CASCADE,
     startDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     endDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -36,7 +36,7 @@ CREATE TABLE Invoice(
 
 Create TABLE Bid(
     customerId INTEGER REFERENCES Customer(id),
-    auctionId INTEGER REFERENCES Auction(id),
+    auctionId INTEGER REFERENCES Auction(id) ON DELETE CASCADE,
     bidDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     price NUMERIC NOT NULL
 );
