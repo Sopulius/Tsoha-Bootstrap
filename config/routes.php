@@ -60,6 +60,14 @@ $routes->get('/auction/:id', function($id) {
     AuctionController::displayAuction($id);
 });
 
+$routes->get('/auction/:id/edit', function($id){
+    AuctionController::edit($id);
+});
+
+$routes->post('/auction/:id/bid', function($id){
+    AuctionController::bid($id);
+});
+
 //suunnitelmat
 
 $routes->get('/hiekkalaatikko', function() {

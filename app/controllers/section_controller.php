@@ -19,10 +19,12 @@ class SectionController extends BaseController{
     }
     
     public static function newSection(){
+        self::check_logged_in();
         View::make('section/new.html');
     }
     
     public static function edit($id){
+        self::check_logged_in();
         $section = Section::find($id);
         View::make('section/edit.html', array('attributes'=>$section));
     }
@@ -71,6 +73,7 @@ class SectionController extends BaseController{
     }
     
     public static function destroy($id){
+        self::check_logged_in();
         $section = new Section(array('id'=>$id));
         $section->destroy();
         Redirect::to('/section', array('message'=>'Osasto poistettu'));

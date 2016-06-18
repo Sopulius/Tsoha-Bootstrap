@@ -13,8 +13,27 @@ class AuctionController extends BaseController{
     }
     
     public static function newAuction(){
+        self::check_logged_in();
         $sections = Section::all();
         View::make('auction/new.html', array('sections'=>$sections));
+    }
+    
+    public static function bid($id){
+        self::check_logged_in();
+        $params = $_POST;
+        
+        $bid = new Bid(array(
+            'auctionId'=>$id,
+            'price'=>$params['price'],
+            'customerId'=>$_SESSION['user']
+        ));
+        
+        $bid->save();
+        
+        Redirect::to('/auction/'.$id,
+                array('message'=>'Huutosi on lisätty'));
+        
+        
     }
     
     public static function store(){
@@ -40,5 +59,44 @@ class AuctionController extends BaseController{
                 array('message'=>'Tuotteesi on listattu!'));
         
         
+    }
+    
+    public static function edit($id){
+        $auctionView = AuctionDisplayViewModel::find($id);
+        View::make('auction/edit.html', array('view'=>$auctionView));
+    }
+        
+        
+        
+        
+    
+    
+    public static function update($id){
+        $params = $_POST;
+        
+        $attributes = array(
+            'id'=>$id,
+            'name'=>$params['name']
+        );
+        
+        $section = new Section($attributes);
+        $errors = $section->errors();
+        
+        if(count($errors)==0){
+            $section->update();
+        
+            Redirect::to('/section/' .$id, array('message' => 'Osasto päivitetty!'));
+            
+        }else{
+            View::make('section/edit.html', array('errors'=>$errors, 'attributes'=>$attributes));
+        }
+        
+        
+    }
+    
+    public static function destroy($id){
+        $section = new Section(array('id'=>$id));
+        $section->destroy();
+        Redirect::to('/section', array('message'=>'Osasto poistettu'));
     }
 }

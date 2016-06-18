@@ -55,5 +55,15 @@ class Bid extends BaseModel {
         
         return null;
     }
+    
+     
+    public function save(){
+        $query = DB::connection()->prepare('INSERT INTO Bid(auctionid, customerid, price) VALUES (:auctionid,:customerid,:price)');
+        $query->execute(array(
+            'auctionid' => $this->auctionId,
+            'customerid'=>$this->customerId,
+            'price'=>$this->price));
+        $row = $query->fetch();
+    }
 
 }

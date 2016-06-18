@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-class CustomerController extends BaseController {
+class UserController extends BaseController {
 
     public static function login() {
         View::make('customer/login.html');
@@ -15,19 +15,19 @@ class CustomerController extends BaseController {
     public static function handle_login() {
         $params = $_POST;
 
-        $customer = Customer::authenticate($params['username'], $params['password']);
+        $user = Customer::authenticate($params['username'], $params['password']);
 
-        if (!$customer) {
+        if (!$user) {
             View::make('customer/login.html', array('error' => 'Väärä käyttäjätunnus tai salasana!', 'username' => $params['username']));
         } else {
-            $_SESSION['customer'] = $customer->id;
+            $_SESSION['user'] = $user->id;
 
-            Redirect::to('/', array('message' => 'Tervetuloa takaisin ' . $customer->name . '!'));
+            Redirect::to('/', array('message' => 'Tervetuloa takaisin ' . $user->name . '!'));
         }
     }
 
     public static function logout() {
-        $_SESSION['customer'] = null;
+        $_SESSION['user'] = null;
         Redirect::to('/', array('message' => 'Olet kirjautunut ulos!'));
     }
 

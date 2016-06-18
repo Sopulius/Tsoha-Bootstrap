@@ -8,7 +8,7 @@
   <h1>{{view.product.name}}</h1>
   <!-- Painikkeet tähän -->
   <p>
-    <button class="btn btn-danger">Poista</button> <a href="#" class="btn btn-default">Muokkaa</a>
+    <button class="btn btn-danger">Poista</button> <a href="{{base_path}}/auction/{{view.auction.id}}/edit" class="btn btn-default">Muokkaa</a>
   </p>
   <!-- Tiedot tulee listana tähän -->
   <ul>
@@ -20,10 +20,10 @@
     <li><strong>Korkein tarjous:</strong> {{view.bids[0].price}}€</li>
   </ul>
   
-  <form>
+  <form method="post" action="{{base_path}}/auction/{{view.auction.id}}/bid">
       <div class ="form-group">
        <button type="submit" class="btn btn-default">Tarjoa</button>
-       <input type="text" name="tarjous" maxlength="6" size="6">
+       <input type="text" name="price" maxlength="6" size="6">
       </div>
   </form>
   
