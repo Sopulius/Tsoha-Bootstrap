@@ -39,11 +39,22 @@ class AuctionController extends BaseController{
     public static function store(){
         $params = $_POST;
         
+        $attributes = array(
+            'name'=>$params['name'],
+            'description'=>$params['description'],
+            'startPrice'=>$params['startPrice']);
+        
         $product = new Product(array(
             'name'=>$params['name'],
             'description'=>$params['description'],
             'startPrice'=>$params['startPrice']
         ));
+        
+        $errors = $product->errors();
+        if($errors){
+            $sections = Section::all();
+             View::make('auction/new.html', array('errors'=>$errors, 'attributes'=>$attributes, 'sections'=>$sections));
+        }
         
         $product->save();
         
