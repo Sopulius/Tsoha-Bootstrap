@@ -48,7 +48,7 @@ class AuctionController extends BaseController{
         $product->save();
         
         $auction = new Auction(array(
-            'customerId'=> $_SESSION['customer'],
+            'customerId'=> $_SESSION['user'],
             'sectionId'=>$params['section'],
             'productId'=>$product->id,
             'endDate'=>$params['days']
@@ -72,31 +72,11 @@ class AuctionController extends BaseController{
     
     
     public static function update($id){
-        $params = $_POST;
-        
-        $attributes = array(
-            'id'=>$id,
-            'name'=>$params['name']
-        );
-        
-        $section = new Section($attributes);
-        $errors = $section->errors();
-        
-        if(count($errors)==0){
-            $section->update();
-        
-            Redirect::to('/section/' .$id, array('message' => 'Osasto päivitetty!'));
-            
-        }else{
-            View::make('section/edit.html', array('errors'=>$errors, 'attributes'=>$attributes));
-        }
+       
         
         
     }
     
     public static function destroy($id){
-        $section = new Section(array('id'=>$id));
-        $section->destroy();
-        Redirect::to('/section', array('message'=>'Osasto poistettu'));
     }
 }

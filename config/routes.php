@@ -2,21 +2,21 @@
 
 //Etusivu
 $routes->get('/', function() {
-    HelloWorldController::index();
+    IndexController::index();
 });
 
 //Käyttäjät
 $routes->get('/login', function() {
     
-    CustomerController::login();
+    UserController::login();
 });
 $routes->post('/login', function() {
     
-    CustomerController::handle_login();
+    UserController::handle_login();
 });
 
 $routes->post('/logout', function(){
-  CustomerController::logout();
+    UserController::logout();
 });
 
 //Osastot

@@ -5,6 +5,7 @@ class Product extends BaseModel{
     
     public function __construct($attributes = null) {
         parent::__construct($attributes);
+        $this->validators = array('validate_name','validate_description');
     }
     
     public static function all(){
@@ -54,6 +55,14 @@ class Product extends BaseModel{
             'startprice'=>$this->startPrice));
         $row = $query->fetch();
         $this->id = $row['id'];
+    }
+    
+     public function validate_name(){
+        return $this->validate_string_length($this->name, 1, 50);
+    }
+    
+    public function validate_description(){
+        return $this->validate_string_length($this->description, 1, 300);
     }
    
 }
