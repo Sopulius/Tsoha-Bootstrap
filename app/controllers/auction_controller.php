@@ -51,6 +51,11 @@ class AuctionController extends BaseController{
         ));
         
         $errors = $product->errors();
+        
+        $days = $params['days'];
+        if($days == null){
+            $errors[] = 'Anna huutokaupalle kesto.';
+        }
         if($errors){
             $sections = Section::all();
              View::make('auction/new.html', array('errors'=>$errors, 'attributes'=>$attributes, 'sections'=>$sections));

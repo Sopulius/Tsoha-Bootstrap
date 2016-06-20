@@ -28,16 +28,30 @@
       return $errors;
     }
     
-    public function validate_string_length($string, $min, $max){
+    public function validate_string_length($string, $min, $max, $field){
         $errors = array();
         if($string ==''||$string == null){
-            $errors[] = 'Kenttä ei saa olla tyhjä';
+            $errors[] = 'Kenttä "'.$field.'" ei saa olla tyhjä.';
         }
         if(strlen($string)<$min || strlen($string)>$max){
-            $errors[] = 'Merkkijonon pituuden tulee olla välillä ' .$min.'-' .$max;
+            $errors[] = 'Kentän "'.$field.'" merkkijonon pituuden tulee olla väliltä ' .$min.' - ' .$max.'.';
         }
         
         return $errors;
     }
+    
+    public function validate_number($number, $min, $max, $field){
+        $errors = array();
+        if($number == null){
+            $errors[] = 'Kenttä "'.$field.'" ei saa olla tyhjä.';
+        }
+        if($number<$min || $number>$max){
+            $errors[] = 'Kentän "'.$field.'" arvo tulee olla väliltä '.$min.' - '.$max.'.';
+        }
+        
+        return $errors;
+    }
+    
+    
 
   }

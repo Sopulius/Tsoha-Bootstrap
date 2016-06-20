@@ -62,6 +62,6 @@ class Section extends BaseModel{
     }
     
     public function validate_name(){
-        return $this->validate_string_length($this->name, 4, 20);
+        return $this->validate_string_length($this->name, 4, 20,'Nimi');
     }
 }
