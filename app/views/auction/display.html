@@ -7,26 +7,37 @@
 {%endif%}
   <h1>{{view.product.name}}</h1>
   <!-- Painikkeet tähän -->
+  {%if user_logged_in.id == view.auction.customerId %}
   <p>
-    <button class="btn btn-danger">Poista</button> <a href="{{base_path}}/auction/{{view.auction.id}}/edit" class="btn btn-default">Muokkaa</a>
+    <button class="btn btn-danger">Poista</button> 
+    <a href="{{base_path}}/auction/{{view.auction.id}}/edit" class="btn btn-default">Muokkaa</a>
   </p>
+  {%endif%}
   <!-- Tiedot tulee listana tähän -->
   <ul>
    
-    <li><strong>Myyjä:</strong><a href="#" > {{view.seller.name}}</a></li>
+    <li><strong>Myyjä:</strong><a href="{{base_path}}/auction/customer/{{view.seller.id}}" > {{view.seller.name}}</a></li>
     <li><strong>Lisäyspäivä:</strong> {{view.auction.startDate}}</li>
     <li><strong>Sulkeutuu:</strong> {{view.auction.endDate}}</li>
     <li><strong>Aloitushinta:</strong> {{view.product.startPrice}}€</li>
     <li><strong>Korkein tarjous:</strong> {{view.bids[0].price}}€</li>
   </ul>
-  
+  <!-- Tarjous -->
+  {%if user_logged_in.id == view.auction.customerId%}
   <form method="post" action="{{base_path}}/auction/{{view.auction.id}}/bid">
       <div class ="form-group">
-       <button type="submit" class="btn btn-default">Tarjoa</button>
+       <button type="submit" class="btn btn-default" disabled>Tarjoa</button>
        <input type="text" name="price" maxlength="6" size="6">
       </div>
   </form>
-  
+  {%else%}
+   <form method="post" action="{{base_path}}/auction/{{view.auction.id}}/bid">
+      <div class ="form-group">
+       <button type="submit" class="btn btn-default" >Tarjoa</button>
+       <input type="text" name="price" maxlength="6" size="6">
+      </div>
+  </form>
+  {%endif%}
   <!-- Kuvaus tulee tähän -->
   <div class="panel panel-default">
       <div class="panel-heading" >

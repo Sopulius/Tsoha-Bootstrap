@@ -7,10 +7,17 @@
       <label>Nimi</label>
       <input class="form-control" value="{{view.product.name}}" type="text">
     </div>
+    {% if view.bids %}
     <div class="form-group">
+      <label>Aloitushinta (kohteellasi on jo huutoja)</label>
+      <input class="form-control" value="{{view.product.startPrice}}" type="text" disabled>
+    </div>
+    {%else%}
+     <div class="form-group">
       <label>Aloitushinta</label>
       <input class="form-control" value="{{view.product.startPrice}}" type="text">
     </div>
+    {%endif%}
     <div class="form-group">
       <label>Kuvaus</label>
       <textarea class="form-control">{{view.product.description}}         

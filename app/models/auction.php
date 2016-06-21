@@ -76,6 +76,32 @@ class Auction extends BaseModel {
         return null;
     }
     
+    
+    public static function allFromCustomer($id) {
+        $query = DB::connection()->prepare('SELECT * FROM Auction WHERE customerid = :id');
+        $query->execute(array('id' => $id));
+
+        $rows = $query->fetchAll();
+        $auctions = array();
+
+        if (!empty($rows)) {
+            foreach ($rows as $row) {
+                array_push($auctions, new Auction(array(
+                    'id' => $row['id'],
+                    'sectionId' =>  $row['sectionid'],
+                    'customerId' => $row['customerid'],
+                    'productId' => $row['productid'],
+                    'startDate' => $row['startdate'],
+                    'endDate' => $row['enddate']
+                )));
+            }
+
+            return $auctions;
+        }
+        
+        return null;
+    }
+    
     public function save(){
         $query = DB::connection()->prepare("INSERT INTO Auction(enddate,customerid,productid,sectionid) VALUES (localtimestamp + interval ' 24 hours' * :enddate ,:customerid, :productid, :sectionid) RETURNING id");
         $query->execute(array(

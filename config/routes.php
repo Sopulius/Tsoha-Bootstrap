@@ -4,6 +4,10 @@
 $routes->get('/', function() {
     IndexController::index();
 });
+//Pääsy evätty
+$routes->get('/forbidden', function(){
+    AccessController::denied();
+});
 
 //Käyttäjät
 $routes->get('/login', function() {
@@ -66,6 +70,10 @@ $routes->get('/auction/:id/edit', function($id){
 
 $routes->post('/auction/:id/bid', function($id){
     AuctionController::bid($id);
+});
+
+$routes->get('/auction/customer/:id', function($id){
+    AuctionController::displayCustomerAuctions($id);
 });
 
 //suunnitelmat

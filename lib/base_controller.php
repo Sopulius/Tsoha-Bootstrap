@@ -20,6 +20,12 @@ class BaseController {
     if(!isset($_SESSION['user'])){
       Redirect::to('/login', array('message' => 'Kirjaudu ensin sisään!'));
     }
+   }
+    
+    public static function check_user_access($id) {
+        if($_SESSION['user'] != $id){
+            Redirect::to('/forbidden');
+        }
   }
 
 }

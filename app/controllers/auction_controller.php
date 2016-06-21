@@ -12,6 +12,11 @@ class AuctionController extends BaseController{
         View::make('auction/display.html',array('view'=>$view));
     }
     
+    public static function displayCustomerAuctions($id){
+        $view = CustomerViewModel::find($id);
+        View::make('auction/customer_auctions.html', array('view'=>$view));
+    }
+    
     public static function newAuction(){
         self::check_logged_in();
         $sections = Section::all();
@@ -79,6 +84,7 @@ class AuctionController extends BaseController{
     
     public static function edit($id){
         $auctionView = AuctionDisplayViewModel::find($id);
+        self::check_user_access($auctionView->seller->id);
         View::make('auction/edit.html', array('view'=>$auctionView));
     }
         
