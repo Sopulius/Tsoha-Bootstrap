@@ -57,6 +57,11 @@ class Product extends BaseModel{
         $this->id = $row['id'];
     }
     
+    public function update(){
+        $query = DB::connection()->prepare('UPDATE Product SET name = :name, startprice = :startprice, description = :description WHERE id=:id');
+        $query->execute(array('name'=> $this->name, 'startprice'=>$this->startPrice, 'description'=>$this->description, 'id'=> $this->id));
+    }
+    
      public function validate_name(){
         return $this->validate_string_length($this->name, 1, 50,'Nimi');
     }

@@ -16,6 +16,7 @@ CREATE TABLE Customer(
     name varchar(20) NOT NULL,
     password varchar(30) NOT NULL,
     phone INTEGER NOT NULL,
+    iban varchar(30) NOT NULL,
     address varchar(120) NOT NULL,
     email varchar(100) NOT NULL
 );

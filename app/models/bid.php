@@ -12,6 +12,7 @@ class Bid extends BaseModel {
 
     public function __construct($attributes = null) {
         parent::__construct($attributes);
+        $this->validators = array('validate_price', 'validate_customer');
     }
 
     public static function findHighestBid($id) {
@@ -64,6 +65,32 @@ class Bid extends BaseModel {
             'customerid'=>$this->customerId,
             'price'=>$this->price));
         $row = $query->fetch();
+    }
+    
+    public function validate_price(){
+        $errors = array();
+        $highest = Bid::findHighestBid($this->auctionId);
+        if($highest == null){
+            $auction = Auction::find($this->auctionId);
+            $product = Product::find($auction->productId);
+            if($this->price < $product->startPrice){
+                $errors[] = 'Tarjouksesi tulee olla suurempi kuin alkuhinta!';
+            }
+        }else if($highest->price >= $this->price){
+            $errors[] = 'Kohteesta on jo tehty korkeampi huuto!';
+        }
+        return $errors;
+    }
+    
+    public function validate_customer(){
+        $errors = array();
+        $highest = Bid::findHighestBid($this->auctionId);
+        if($highest){
+            if($highest->customerId == $this->customerId){
+                $errors[]='Sinulla on jo kohteen korkein tarjous!';
+            }
+        }
+        return $errors;
     }
 
 }

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="page-header">
+    <h1>Hallintasivu</h1>
+  </div>
+
+
+{%if message%}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{%endif%}
+
+  <p>
+    <a href="{{base_path}}/broker/open" class="btn btn-primary btn-lg">Avoimet huutokaupat<span class="glyphicon glyphicon-chevron-right"></span></a>
+  </p>
+  <p>
+    <a href="{{base_path}}/broker/closed" class="btn btn-primary btn-lg">Sulkeutuneet huutokaupat<span class="glyphicon glyphicon-chevron-right"></span></a>
+  </p>
+{% endblock %}

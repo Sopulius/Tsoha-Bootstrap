@@ -20,7 +20,7 @@ class AuctionListViewModel extends BaseModel {
         if (!empty($auctions)) {
             foreach ($auctions as $auc) {
                 $prod = Product::find($auc->productId);
-                $bid = Bid::findHighestBid($id);
+                $bid = Bid::findHighestBid($auc->id);
                 array_push($listView, 
                      new AuctionListViewModel(array('auction' => $auc,
                     'product' => $prod,
@@ -37,7 +37,41 @@ class AuctionListViewModel extends BaseModel {
         if (!empty($auctions)){
              foreach ($auctions as $auc) {
                 $prod = Product::find($auc->productId);
-                $bid = Bid::findHighestBid($id);
+                $bid = Bid::findHighestBid($auc->id);
+                array_push($listView, 
+                     new AuctionListViewModel(array('auction' => $auc,
+                    'product' => $prod,
+                    'highestBid' => $bid)));
+            }
+            return $listView;
+        }
+        return null;
+    }
+    
+    public static function allOpen(){
+        $listView = array();
+        $auctions = Auction::allOpen();
+        if (!empty($auctions)){
+             foreach ($auctions as $auc) {
+                $prod = Product::find($auc->productId);
+                $bid = Bid::findHighestBid($auc->id);
+                array_push($listView, 
+                     new AuctionListViewModel(array('auction' => $auc,
+                    'product' => $prod,
+                    'highestBid' => $bid)));
+            }
+            return $listView;
+        }
+        return null;
+    }
+    
+    public static function allClosed(){
+        $listView = array();
+        $auctions = Auction::allClosed();
+        if (!empty($auctions)){
+             foreach ($auctions as $auc) {
+                $prod = Product::find($auc->productId);
+                $bid = Bid::findHighestBid($auc->id);
                 array_push($listView, 
                      new AuctionListViewModel(array('auction' => $auc,
                     'product' => $prod,

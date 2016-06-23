@@ -30,5 +30,39 @@ class UserController extends BaseController {
         $_SESSION['user'] = null;
         Redirect::to('/', array('message' => 'Olet kirjautunut ulos!'));
     }
+    
+    public static function register(){
+        View::make('customer/register.html');
+    }
+    
+    public static function handle_register(){
+        $params = $_POST;
+        
+        $attributes = array(
+            'name'=>$params['username'],
+            'address'=>$params['address'],
+            'password'=>$params['password'],
+            'email'=>$params['email'],
+            'phone'=>$params['phone'],
+            'iban'=>$params['iban']
+        );
+        
+        $user = new Customer($attributes);
+        
+        $errors = $user->errors();
+        if($params['password']!=$params['passwordRe']){
+            $errors[]='Antamasi salasanat eivät täsmänneet.';
+        }
+        
+        if($errors){
+            View::make('customer/register.html', array(
+                'attributes'=>$attributes, 
+                'errors'=>$errors
+                    ));
+        }else{
+            $user->store();
+            Redirect::to('/',array('message'=>'Rekisteröityminen onnistui!'));
+        }
+    }
 
 }

@@ -33,6 +33,11 @@ class AuctionController extends BaseController{
             'customerId'=>$_SESSION['user']
         ));
         
+        $errors = $bid->errors();
+        if($errors){
+            Redirect::to('/auction/'.$id, array('errors'=>$errors));
+        }
+        
         $bid->save();
         
         Redirect::to('/auction/'.$id,
@@ -95,10 +100,34 @@ class AuctionController extends BaseController{
     
     public static function update($id){
        
+        $params = $_POST;
+        
+        $attributes = array('name'=>$params['name'],
+            'startPrice'=>$params['startprice'],
+            'description'=>$params['description'],
+            'id'=>$id);
+        
+        $product = new Product($attributes);
+        
+        $errors = $product->errors();
+        
+        if($errors){
+            $auctionView = AuctionDisplayViewModel::find($id);
+            View::make('auction/edit.html', array('view'=>$auctionView, 'errors'=>$errors));
+        }else{
+            $product->update();
+            $auctionView = AuctionDisplayViewModel::find($id);
+            Redirect::to('/auction/'.$id, array('view'=>$auctionView, 'message'=>'Kohde päivitetty onnistuneesti!'));
+        }
+        
         
         
     }
     
     public static function destroy($id){
+        self::check_logged_in();
+        $auction = new Auction(array('id'=>$id));
+        $Auction->destroy();
+        Redirect::to('/section', array('message'=>'Osasto poistettu'));
     }
 }

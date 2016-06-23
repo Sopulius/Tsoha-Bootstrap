@@ -50,6 +50,50 @@ class Auction extends BaseModel {
 
         return null;
     }
+    
+    public static function allOpen(){
+        $query = DB::connection()->prepare('SELECT * FROM Auction WHERE enddate > localtimestamp ORDER BY enddate DESC');
+        $query->execute();
+
+        $rows = $query->fetchAll();
+        $auctions = array();
+
+        foreach ($rows as $row) {
+            array_push($auctions, new Auction(array(
+                'id' => $row['id'],
+                'sectionId'=> $row['sectionid'],
+                'customerId' => $row['customerid'],
+                'productId' => $row['productid'],
+                'startDate' => $row['startdate'],
+                'endDate' => $row['enddate']
+            )));
+        }
+
+        return $auctions;
+    }
+    
+    public static function allClosed(){
+        $query = DB::connection()->prepare('SELECT * FROM Auction WHERE enddate < localtimestamp ORDER BY enddate DESC');
+        $query->execute();
+
+        $rows = $query->fetchAll();
+        $auctions = array();
+
+        foreach ($rows as $row) {
+            array_push($auctions, new Auction(array(
+                'id' => $row['id'],
+                'sectionId'=> $row['sectionid'],
+                'customerId' => $row['customerid'],
+                'productId' => $row['productid'],
+                'startDate' => $row['startdate'],
+                'endDate' => $row['enddate']
+            )));
+        }
+
+        return $auctions;
+    }
+    
+    
 
     public static function allInSection($id) {
         $query = DB::connection()->prepare('SELECT * FROM Auction WHERE sectionid= :id');

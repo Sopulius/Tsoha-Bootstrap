@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<p>
+    <a href="{{base_path}}/section" class ="btn btn-primary">Takaisin</a>
+</p>
+
+{%if message%}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{%endif%}
+
+  <h1>Auki olevat kohteet</h1>
+  
+  
+  <table class="table table-striped table-responsive">
+      <thead>
+        <th>Nimi</th>
+        <th>Lisätty</th>
+        <th>Sulkeutuu</th>
+        <th>Lähtöhinta</th>
+        <th>Korkein tarjous</th>
+      </thead>
+      <tbody>
+          {% if auctionList%}
+            {%for object in auctionList%}
+                <tr>
+                    <td><a href="{{base_path}}/auction/{{object.auction.id}}">{{object.product.name}}</a></td>
+                    <td>{{object.auction.startDate}} </td>
+                    <td>{{object.auction.endDate}} </td>
+                    <td>{{object.product.startPrice}}</td>
+                    <td>{%if object.highestBid%}
+                            {{object.highestBid.price}}
+                        {%else%}
+                            <p>-</p
+                        {%endif%}
+                    </td>
+                </tr>
+            {% endfor %}
+          {%else%}
+            <p>Ei näytettäviä kohteita</p>
+          {%endif%}
+      </tbody>
+  </table>
+
+  
+{% endblock %}

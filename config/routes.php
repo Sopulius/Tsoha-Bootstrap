@@ -9,6 +9,15 @@ $routes->get('/forbidden', function(){
     AccessController::denied();
 });
 
+//Meklari
+$routes->get('/broker', function(){
+    BrokerController::index();
+});
+
+$routes->get('/broker/open', function(){
+    BrokerController::open_auctions();
+});
+
 //Käyttäjät
 $routes->get('/login', function() {
     
@@ -21,6 +30,14 @@ $routes->post('/login', function() {
 
 $routes->post('/logout', function(){
     UserController::logout();
+});
+
+$routes->get('/register', function(){
+    UserController::register();
+});
+
+$routes->post('/register', function(){
+    UserController::handle_register();
 });
 
 //Osastot
@@ -66,6 +83,10 @@ $routes->get('/auction/:id', function($id) {
 
 $routes->get('/auction/:id/edit', function($id){
     AuctionController::edit($id);
+});
+
+$routes->post('/auction/:id/edit', function($id){
+    AuctionController::update($id);
 });
 
 $routes->post('/auction/:id/bid', function($id){
