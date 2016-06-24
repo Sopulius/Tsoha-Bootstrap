@@ -156,5 +156,20 @@ class Auction extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['id'];
     }
+    
+    public function destroy(){
+        $query = DB::connection()->prepare('DELETE FROM Auction WHERE id=:id');
+        $query->execute(array('id'=>$this->id));
+    }
+    
+    public function is_handled(){
+        $query = DB::connection()->prepare("SELECT * FROM Invoice WHERE auctionid = :id LIMIT 1");
+        $query->execute(array('id'=>$this->id));
+        $row = $query->fetch();
+        if($row){
+            return true;
+        }
+        return false;
+    }
 
 }

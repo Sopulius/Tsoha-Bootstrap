@@ -8,11 +8,30 @@
 
 class Bid extends BaseModel {
 
-    public $customerId, $auctionId, $bidDate, $price;
+    public $id, $customerId, $auctionId, $bidDate, $price;
 
     public function __construct($attributes = null) {
         parent::__construct($attributes);
         $this->validators = array('validate_price', 'validate_customer');
+    }
+    
+    public static function find($id){
+        $query = DB::connection()->prepare('SELECT * FROM Bid WHERE id =:id LIMIT 1');
+        $query->execute(array('id'=>$id));
+        $row =$query->fetch();
+        if ($row) {
+            $bid = new Bid(array(
+                'id'=>$row['id'],
+                'customerId' => $row['customerid'],
+                'auctionId' => $row['auctionid'],
+                'price' => $row['price'],
+                'bidDate'=>$row['biddate']
+            ));
+            
+            return $bid;
+        }
+        
+        return null;
     }
 
     public static function findHighestBid($id) {
@@ -23,6 +42,7 @@ class Bid extends BaseModel {
 
         if ($row) {
             $bid = new Bid(array(
+                'id'=>$row['id'],
                 'customerId' => $row['customerid'],
                 'auctionId' => $row['auctionid'],
                 'price' => $row['price'],
@@ -44,6 +64,7 @@ class Bid extends BaseModel {
             $bids = array();
             foreach($rows as $row){
                 array_push($bids, new Bid(array(
+                    'id'=>$row['id'],
                     'auctionId'=>$row['auctionid'],
                     'customerId'=>$row['customerid'],
                     'price'=>$row['price'],
@@ -65,6 +86,11 @@ class Bid extends BaseModel {
             'customerid'=>$this->customerId,
             'price'=>$this->price));
         $row = $query->fetch();
+    }
+    
+    public function destroy(){
+        $query = DB::connection()->prepare('DELETE FROM Bid WHERE id=:id');
+        $query->execute(array('id'=>$this->id));
     }
     
     public function validate_price(){

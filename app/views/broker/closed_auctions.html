@@ -1,1 +1,58 @@
 
+{% extends "base.html" %}
+{% block content %}
+<p>
+    <a href="{{base_path}}/broker" class ="btn btn-primary">Takaisin</a>
+</p>
+
+{%if message%}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{%endif%}
+
+  <h1>Suljetut kohteet</h1>
+  
+  
+  <table class="table table-striped table-responsive">
+      <thead>
+        <th>Nimi</th>
+        <th>Lisätty</th>
+        <th>Sulkeutuu</th>
+        <th>Lähtöhinta</th>
+        <th>Korkein tarjous</th>
+        <th>Tila</th>
+      </thead>
+      <tbody>
+          {% if auctionList%}
+            {%for object in auctionList%}
+                <tr>
+                    <td><a href="{{base_path}}/auction/{{object.auction.id}}">{{object.product.name}}</a></td>
+                    <td>{{object.auction.startDate}} </td>
+                    <td>{{object.auction.endDate}} </td>
+                    <td>{{object.product.startPrice}}</td>
+                    <td>{%if object.highestBid%}
+                            {{object.highestBid.price}}
+                        {%else%}
+                            <p>-</p
+                        {%endif%}
+                    </td>
+                    {% if object.auction.is_handled %}
+                    <td><button class="btn btn-success" disabled>Käsitelty</td>
+                    {%elseif object.highestBid is null%}
+                    <td><button class="btn btn-danger" disabled>Ei tarjouksia</td>
+                    {%else%}
+                    <td><form method="post" action="{{base_path}}/broker/confirm/{{object.auction.id}}">
+                      <button type="submit" class="btn btn-primary">Vahvista sulkeminen</button>
+                        </form></td>
+                    {%endif%}
+                </tr>
+            {% endfor %}
+          {%else%}
+            <p>Ei näytettäviä kohteita</p>
+          {%endif%}
+      </tbody>
+  </table>
+
+  
+{% endblock %}

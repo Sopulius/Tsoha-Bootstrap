@@ -16,9 +16,11 @@
 {% endif %}
   <h1>{{view.product.name}}</h1>
   <!-- Painikkeet tähän -->
-  {%if user_logged_in.id == view.auction.customerId %}
+  {%if user_logged_in.id == view.auction.customerId or user_logged_in.id == 1 %}
   <p>
-    <button class="btn btn-danger">Poista</button> 
+    <form method="post" action="{{base_path}}/auction/destroy/{{view.auction.id}}">
+        <button type="submit" class="btn btn-danger">Poista</button>
+    </form>
     <a href="{{base_path}}/auction/{{view.auction.id}}/edit" class="btn btn-default">Muokkaa</a>
   </p>
   {%endif%}
@@ -91,6 +93,11 @@
                     </td>
                     <td>
                        {{bid.bidDate}}
+                    </td>
+                    <td>
+                        <form method="post" action="{{base_path}}/bid/{{bid.id}}/destroy">
+                            <button type="submit" class="btn btn-danger">Poista</button>
+                        </form>
                     </td>
                 </tr>
                 {%endfor%}

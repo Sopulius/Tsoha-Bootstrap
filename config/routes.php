@@ -18,6 +18,14 @@ $routes->get('/broker/open', function(){
     BrokerController::open_auctions();
 });
 
+$routes->get('/broker/closed', function(){
+    BrokerController::closed_auctions();
+});
+
+$routes->post('/broker/confirm/:id', function($id){
+    BrokerController::confirm_auction($id); 
+});
+
 //Käyttäjät
 $routes->get('/login', function() {
     
@@ -81,6 +89,10 @@ $routes->get('/auction/:id', function($id) {
     AuctionController::displayAuction($id);
 });
 
+$routes->post('/auction/destroy/:id', function($id){
+    AuctionController::destroy($id);
+});
+
 $routes->get('/auction/:id/edit', function($id){
     AuctionController::edit($id);
 });
@@ -89,14 +101,20 @@ $routes->post('/auction/:id/edit', function($id){
     AuctionController::update($id);
 });
 
-$routes->post('/auction/:id/bid', function($id){
-    AuctionController::bid($id);
-});
+
 
 $routes->get('/auction/customer/:id', function($id){
     AuctionController::displayCustomerAuctions($id);
 });
 
+//huudot
+$routes->post('/auction/:id/bid', function($id){
+    BidController::store($id);
+});
+
+$routes->post('/bid/:id/destroy', function($id){
+    BidController::destroy($id);
+});
 //suunnitelmat
 
 $routes->get('/hiekkalaatikko', function() {

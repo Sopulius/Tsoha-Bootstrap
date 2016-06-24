@@ -23,28 +23,7 @@ class AuctionController extends BaseController{
         View::make('auction/new.html', array('sections'=>$sections));
     }
     
-    public static function bid($id){
-        self::check_logged_in();
-        $params = $_POST;
-        
-        $bid = new Bid(array(
-            'auctionId'=>$id,
-            'price'=>$params['price'],
-            'customerId'=>$_SESSION['user']
-        ));
-        
-        $errors = $bid->errors();
-        if($errors){
-            Redirect::to('/auction/'.$id, array('errors'=>$errors));
-        }
-        
-        $bid->save();
-        
-        Redirect::to('/auction/'.$id,
-                array('message'=>'Huutosi on lisätty'));
-        
-        
-    }
+    
     
     public static function store(){
         $params = $_POST;
@@ -126,8 +105,8 @@ class AuctionController extends BaseController{
     
     public static function destroy($id){
         self::check_logged_in();
-        $auction = new Auction(array('id'=>$id));
-        $Auction->destroy();
-        Redirect::to('/section', array('message'=>'Osasto poistettu'));
+        $auction = Auction::find($id);
+        $auction->destroy();
+        Redirect::to('/section/'.$auction->sectionId, array('message'=>'Huutokauppa poistettu!'));
     }
 }

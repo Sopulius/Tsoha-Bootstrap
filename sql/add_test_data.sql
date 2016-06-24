@@ -7,5 +7,11 @@ INSERT INTO Section  (name) VALUES('Musiikki');
 INSERT INTO Section  (name) VALUES('Pelit');
 
 INSERT INTO Product  (name, startPrice, description)    VALUES('Sähkökitara',500,'Hyvä kitara');
+INSERT INTO Product  (name, startPrice, description)    VALUES('Basso',600,'Hyvä basso');
+INSERT INTO Product  (name, startPrice, description)    VALUES('Rummut', 2000, 'Hyvät rummut');
 INSERT INTO Auction  (sectionId,customerId, productId) VALUES(1,1,1);
+INSERT INTO Auction  (sectionId,customerId, productId) VALUES(1,1,2);
+INSERT INTO Auction  (sectionId,customerId, productId) VALUES(1,1,3);
 INSERT INTO Bid      (customerId,auctionId,price) VALUES(2,1,600);
+INSERT INTO Bid      (customerId, auctionId,price)VALUES(2,1,700);
+INSERT INTO Invoice  (auctionId) VALUES(2);

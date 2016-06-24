@@ -32,10 +32,11 @@ CREATE TABLE Auction(
 
 CREATE TABLE Invoice(
     id SERIAL PRIMARY KEY,
-    auctionId INTEGER REFERENCES Auction(id)
+    auctionId INTEGER REFERENCES Auction(id) ON DELETE CASCADE
 );
 
 Create TABLE Bid(
+    id SERIAL PRIMARY KEY,
     customerId INTEGER REFERENCES Customer(id),
     auctionId INTEGER REFERENCES Auction(id) ON DELETE CASCADE,
     bidDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
