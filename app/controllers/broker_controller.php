@@ -8,20 +8,24 @@
 
 class BrokerController extends BaseController{
     public static function index(){
+        self::check_user_access(1);
         View::make('broker/index.html');
     }
     
     public static function open_auctions(){
+        self::check_user_access(1);
         $view = AuctionListViewModel::allOpen();
         View::make('broker/open_auctions.html', array('auctionList'=>$view));
     }
     
     public static function closed_auctions(){
+        self::check_user_access(1);
         $view = AuctionListViewModel::allClosed();
         View::make('broker/closed_auctions.html', array('auctionList'=>$view));
     }
     
     public static function confirm_auction($id){
+        self::check_user_access(1);
         
         $view = ConfirmationViewModel::find($id);
         

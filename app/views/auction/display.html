@@ -40,7 +40,7 @@
 {%endif%}
 
 <!-- Muokkaus ja poisto -->
-{%if user_logged_in.id == view.auction.customerId or user_logged_in.id == 1 %}
+{%if (user_logged_in.id == view.auction.customerId or user_logged_in.id == 1) %}
 <p>
 <form method="post" action="{{base_path}}/auction/destroy/{{view.auction.id}}">
     <button type="submit" class="btn btn-danger">Poista</button>
@@ -118,7 +118,7 @@
                         <td>
                             {{bid.bidDate}}
                         </td>
-                        {%if (user_logged_in.id == 1 or user_logged_in.id == view.auction.cutomerId)%}
+                        {%if (user_logged_in.id == 1 or user_logged_in.id == view.auction.customerId)%}
                         <td>
                             <form method="post" action="{{base_path}}/bid/{{bid.id}}/destroy">
                                 <button type="submit" class="btn btn-danger">Poista</button>
