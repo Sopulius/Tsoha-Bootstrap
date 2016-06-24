@@ -6,9 +6,13 @@ Yleisiä linkkejä:
 * [Linkki dokumentaatiooni](https://github.com/Sopulius/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
 * [Suunniteltujen näkymien linkit](https://github.com/Sopulius/Tsoha-Bootstrap/blob/master/doc/suunnitelmat.md)
 
-Testitunnus:
+Testitunnus(meklari):
 * Käyttäjänimi: admin
 * Salasana: qwerty
+
+Testitunnus(asiakas):
+* Käyttäjänimi: Pekka
+* Salasana: 123456
 
 ## Työn aihe
 
