@@ -6,109 +6,134 @@
 </div>
 {%endif%}
 {% if errors %}
-    <div class="alert alert-danger">
-      <ul>
+<div class="alert alert-danger">
+    <ul>
         {% for error in errors %}
-          <li>{{error}}</li>
+        <li>{{error}}</li>
         {% endfor %}
-      </ul>
-    </div>
+    </ul>
+</div>
 {% endif %}
+
+<!--meklarin navigointi-->
+{%if user_logged_in.id == 1 %}
+    {% if view.auction.is_closed %}
+    <p>
+        <a href="{{base_path}}/broker/closed" class="btn btn-primary">Takaisin suljettuihin</a>
+    </p>
+    {%else%}
+    <p>
+        <a href="{{base_path}}/broker/open" class="btn btn-primary">Takaisin avoimiin</a>
+    </p>
+    {%endif%}
+{%endif%}
+
+<!--takaisin osastoon-->
 <p>
     <a href="{{base_path}}/section/{{view.auction.sectionId}}" class="btn btn-primary">Takaisin</a>
 </p>
-  <h1>{{view.product.name}}</h1>
-  <!-- Painikkeet tähän -->
-  {%if user_logged_in.id == view.auction.customerId or user_logged_in.id == 1 %}
-  <p>
-    <form method="post" action="{{base_path}}/auction/destroy/{{view.auction.id}}">
-        <button type="submit" class="btn btn-danger">Poista</button>
-    </form>
-    <a href="{{base_path}}/auction/{{view.auction.id}}/edit" class="btn btn-default">Muokkaa</a>
-  </p>
-  {%endif%}
-  <!-- Tiedot tulee listana tähän -->
-  <ul>
-   
+
+<h1>{{view.product.name}}</h1>
+
+{%if view.auction.is_closed%}
+<h1 style="color:red;">Kohde on Suljettu</h1>
+{%endif%}
+
+<!-- Muokkaus ja poisto -->
+{%if user_logged_in.id == view.auction.customerId or user_logged_in.id == 1 %}
+<p>
+<form method="post" action="{{base_path}}/auction/destroy/{{view.auction.id}}">
+    <button type="submit" class="btn btn-danger">Poista</button>
+</form>
+<a href="{{base_path}}/auction/{{view.auction.id}}/edit" class="btn btn-default">Muokkaa</a>
+</p>
+{%endif%}
+<!-- Tiedot tulee listana tähän -->
+<ul>
+
     <li><strong>Myyjä:</strong><a href="{{base_path}}/auction/customer/{{view.seller.id}}" > {{view.seller.name}}</a></li>
     <li><strong>Lisäyspäivä:</strong> {{view.auction.startDate}}</li>
     <li><strong>Sulkeutuu:</strong> {{view.auction.endDate}}</li>
     <li><strong>Aloitushinta:</strong> {{view.product.startPrice}}€</li>
     <li><strong>Korkein tarjous:</strong> {{view.bids[0].price}}€</li>
-  </ul>
-  <!-- Tarjous -->
-  {%if user_logged_in.id == view.auction.customerId%}
-  <form method="post" action="{{base_path}}/auction/{{view.auction.id}}/bid">
-      <div class ="form-group">
-       <button type="submit" class="btn btn-default" disabled>Tarjoa</button>
-       <input type="text" name="price" maxlength="6" size="6">
-      </div>
-  </form>
-  {%else%}
-   <form method="post" action="{{base_path}}/auction/{{view.auction.id}}/bid">
-      <div class ="form-group">
-       <button type="submit" class="btn btn-default" >Tarjoa</button>
-       <input type="text" name="price" maxlength="6" size="6">
-      </div>
-  </form>
-  {%endif%}
-  <!-- Kuvaus tulee tähän -->
-  <div class="panel panel-default">
-      <div class="panel-heading" >
-          <h3 class="panel-title">Kuvaus</h3>
-      </div>
-      <div class="panel panel-body">
-          {{view.product.description}}
-      </div>
-  </div>
-  <!-- Tarjoukset -->
-   <div class="panel-group">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-        <a data-toggle="collapse" href="#collapse1">Tarjoukset</a>
-        </h3>
+</ul>
+<!-- Tarjous -->
+{%if (user_logged_in.id == view.auction.customerId or view.auction.is_closed)%}
+<form method="post" action="{{base_path}}/auction/{{view.auction.id}}/bid">
+    <div class ="form-group">
+        <button type="submit" class="btn btn-default" disabled>Tarjoa</button>
+        <input type="text" name="price" maxlength="6" size="6">
     </div>
-    <div id="collapse1" class="panel-collapse collapse">
-        <table class="table table-striped table-responsive">
-            <thead>
-                
-                <th>
-                  Nimi
-                </th>
-                <th>
-                  Tarjous
-                </th>
-                <th>
-                  Pvm
-                </th>
-                
-            </thead>
-            <tbody>
-                
-                {%for bid in view.bids%}
-                <tr>
-                    <td>
-                        <a href="{{base_path}}/auction/customer/{{bid.customerId}}">{{bid.customer_name}}</a>
-                    </td>
-                    <td>
-                       {{bid.price}}€ 
-                    </td>
-                    <td>
-                       {{bid.bidDate}}
-                    </td>
-                    <td>
-                        <form method="post" action="{{base_path}}/bid/{{bid.id}}/destroy">
-                            <button type="submit" class="btn btn-danger">Poista</button>
-                        </form>
-                    </td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
-      <div class="panel-footer"></div>
+</form>
+{%else%}
+<form method="post" action="{{base_path}}/auction/{{view.auction.id}}/bid">
+    <div class ="form-group">
+        <button type="submit" class="btn btn-default" >Tarjoa</button>
+        <input type="text" name="price" maxlength="6" size="6">
     </div>
-  </div>
+</form>
+{%endif%}
+<!-- Kuvaus tulee tähän -->
+<div class="panel panel-default">
+    <div class="panel-heading" >
+        <h3 class="panel-title">Kuvaus</h3>
+    </div>
+    <div class="panel panel-body">
+        {{view.product.description}}
+    </div>
+</div>
+<!-- Tarjoukset -->
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <a data-toggle="collapse" href="#collapse1">Tarjoukset</a>
+            </h3>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse">
+            <table class="table table-striped table-responsive">
+                <thead>
+
+                <th>
+                    Nimi
+                </th>
+                <th>
+                    Tarjous
+                </th>
+                <th>
+                    Pvm
+                </th>
+
+                </thead>
+                <tbody>
+
+                    {%for bid in view.bids%}
+                    <tr>
+                        <td>
+                            <a href="{{base_path}}/auction/customer/{{bid.customerId}}">{{bid.customer_name}}</a>
+                        </td>
+                        <td>
+                            {{bid.price}}€ 
+                        </td>
+                        <td>
+                            {{bid.bidDate}}
+                        </td>
+                        {%if (user_logged_in.id == 1 or user_logged_in.id == view.auction.cutomerId)%}
+                        <td>
+                            <form method="post" action="{{base_path}}/bid/{{bid.id}}/destroy">
+                                <button type="submit" class="btn btn-danger">Poista</button>
+                            </form>
+                        </td>
+                        {%else%}
+                        <td></td>
+                        {%endif%}
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+            <div class="panel-footer"></div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

@@ -168,7 +168,7 @@ class Auction extends BaseModel {
     }
     
     public function save(){
-        $query = DB::connection()->prepare("INSERT INTO Auction(enddate,customerid,productid,sectionid) VALUES (localtimestamp + interval ' 24 hours' * :enddate ,:customerid, :productid, :sectionid) RETURNING id");
+        $query = DB::connection()->prepare("INSERT INTO Auction(enddate,customerid,productid,sectionid) VALUES (localtimestamp(1) + interval ' 24 hours' * :enddate ,:customerid, :productid, :sectionid) RETURNING id");
         $query->execute(array(
             'enddate'=>$this->endDate,
             'customerid'=>$this->customerId,
@@ -186,6 +186,16 @@ class Auction extends BaseModel {
     public function is_handled(){
         $query = DB::connection()->prepare("SELECT * FROM Invoice WHERE auctionid = :id LIMIT 1");
         $query->execute(array('id'=>$this->id));
+        $row = $query->fetch();
+        if($row){
+            return true;
+        }
+        return false;
+    }
+    
+    public function is_closed(){
+        $query = DB::connection()->prepare("SELECT * FROM Auction WHERE localtimestamp > :enddate AND id = :id LIMIT 1");
+        $query->execute(array('enddate'=>$this->endDate, 'id'=>$this->id));
         $row = $query->fetch();
         if($row){
             return true;

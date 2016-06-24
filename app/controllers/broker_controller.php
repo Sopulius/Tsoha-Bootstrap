@@ -46,6 +46,7 @@ class BrokerController extends BaseController{
             "Reply-To: template@template.com",
             "X-Mailer: PHP/".PHP_VERSION);
         $headers = implode("\r\n", $headers);
+        
         //mail($toBuyer, $subject, $messageBuyer, $headers);
         //mail($toSeller,$subject, $messageSeller, $headers);
         

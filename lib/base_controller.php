@@ -23,7 +23,7 @@ class BaseController {
    }
     
     public static function check_user_access($id) {
-        if($_SESSION['user'] != $id){
+        if($_SESSION['user'] != $id && $_SESSION['user'] != 1){
             Redirect::to('/forbidden');
         }
   }
