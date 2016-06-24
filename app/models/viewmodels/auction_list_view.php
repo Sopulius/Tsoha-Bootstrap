@@ -15,93 +15,38 @@ class AuctionListViewModel extends BaseModel {
     }
 
     public static function allInSection($id) {
-        $listView = array();
         $auctions = Auction::allInSection($id);
-        if (!empty($auctions)) {
-            foreach ($auctions as $auc) {
-                $prod = Product::find($auc->productId);
-                $bid = Bid::findHighestBid($auc->id);
-                array_push($listView, 
-                     new AuctionListViewModel(array('auction' => $auc,
-                    'product' => $prod,
-                    'highestBid' => $bid)));
-            }
-            return $listView;
-        }
-        return null;
+        return self::create_list_view($auctions);
     }
     
     public static function allFromCustomer($id) {
-        $listView = array();
         $auctions = Auction::allFromCustomer($id);
-        if (!empty($auctions)){
-             foreach ($auctions as $auc) {
-                $prod = Product::find($auc->productId);
-                $bid = Bid::findHighestBid($auc->id);
-                array_push($listView, 
-                     new AuctionListViewModel(array('auction' => $auc,
-                    'product' => $prod,
-                    'highestBid' => $bid)));
-            }
-            return $listView;
-        }
-        return null;
+        return self::create_list_view($auctions);
     }
     
     public static function allOpen(){
-        $listView = array();
         $auctions = Auction::allOpen();
-        if (!empty($auctions)){
-             foreach ($auctions as $auc) {
-                $prod = Product::find($auc->productId);
-                $bid = Bid::findHighestBid($auc->id);
-                array_push($listView, 
-                     new AuctionListViewModel(array('auction' => $auc,
-                    'product' => $prod,
-                    'highestBid' => $bid)));
-            }
-            return $listView;
-        }
-        return null;
+        return self::create_list_view($auctions);
     }
     
     public static function allOpenInSection($id){
-        $listView = array();
         $auctions = Auction::allOpenInSection($id);
-        if (!empty($auctions)){
-             foreach ($auctions as $auc) {
-                $prod = Product::find($auc->productId);
-                $bid = Bid::findHighestBid($auc->id);
-                array_push($listView, 
-                     new AuctionListViewModel(array('auction' => $auc,
-                    'product' => $prod,
-                    'highestBid' => $bid)));
-            }
-            return $listView;
-        }
-        return null;
+        return self::create_list_view($auctions);
     }
     
     public static function allClosed(){
-        $listView = array();
         $auctions = Auction::allClosed();
-        if (!empty($auctions)){
-             foreach ($auctions as $auc) {
-                $prod = Product::find($auc->productId);
-                $bid = Bid::findHighestBid($auc->id);
-                array_push($listView, 
-                     new AuctionListViewModel(array('auction' => $auc,
-                    'product' => $prod,
-                    'highestBid' => $bid)));
-            }
-            return $listView;
-        }
-        return null;
+        return self::create_list_view($auctions);
     }
     
     public static function allWhereCustomerHasBids($id){
-        $listView = array();
         $auctions = Auction::allWhereCustomerHasBids($id);
+        return self::create_list_view($auctions);
+    }
+    
+    private static function create_list_view($auctions){
+        $listView = array();
+        
         if (!empty($auctions)){
              foreach ($auctions as $auc) {
                 $prod = Product::find($auc->productId);

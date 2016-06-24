@@ -13,20 +13,7 @@ class Auction extends BaseModel {
         $query->execute();
 
         $rows = $query->fetchAll();
-        $auctions = array();
-
-        foreach ($rows as $row) {
-            array_push($auctions, new Auction(array(
-                'id' => $row['id'],
-                'sectionId'=> $row['sectionid'],
-                'customerId' => $row['customerid'],
-                'productId' => $row['productid'],
-                'startDate' => $row['startdate'],
-                'endDate' => $row['enddate']
-            )));
-        }
-
-        return $auctions;
+        return self::handle_rows($rows);
     }
 
     public static function find($id) {
@@ -56,20 +43,7 @@ class Auction extends BaseModel {
         $query->execute();
 
         $rows = $query->fetchAll();
-        $auctions = array();
-
-        foreach ($rows as $row) {
-            array_push($auctions, new Auction(array(
-                'id' => $row['id'],
-                'sectionId'=> $row['sectionid'],
-                'customerId' => $row['customerid'],
-                'productId' => $row['productid'],
-                'startDate' => $row['startdate'],
-                'endDate' => $row['enddate']
-            )));
-        }
-
-        return $auctions;
+        return self::handle_rows($rows);
     }
     
     public static function allOpenInSection($id){
@@ -77,20 +51,7 @@ class Auction extends BaseModel {
         $query->execute(array('id'=>$id));
 
         $rows = $query->fetchAll();
-        $auctions = array();
-
-        foreach ($rows as $row) {
-            array_push($auctions, new Auction(array(
-                'id' => $row['id'],
-                'sectionId'=> $row['sectionid'],
-                'customerId' => $row['customerid'],
-                'productId' => $row['productid'],
-                'startDate' => $row['startdate'],
-                'endDate' => $row['enddate']
-            )));
-        }
-
-        return $auctions;
+        return self::handle_rows($rows);
     }
     
     public static function allClosed(){
@@ -98,20 +59,7 @@ class Auction extends BaseModel {
         $query->execute();
 
         $rows = $query->fetchAll();
-        $auctions = array();
-
-        foreach ($rows as $row) {
-            array_push($auctions, new Auction(array(
-                'id' => $row['id'],
-                'sectionId'=> $row['sectionid'],
-                'customerId' => $row['customerid'],
-                'productId' => $row['productid'],
-                'startDate' => $row['startdate'],
-                'endDate' => $row['enddate']
-            )));
-        }
-
-        return $auctions;
+        return self::handle_rows($rows);
     }
     
     
@@ -121,24 +69,7 @@ class Auction extends BaseModel {
         $query->execute(array('id' => $id));
 
         $rows = $query->fetchAll();
-        $auctions = array();
-
-        if (!empty($rows)) {
-            foreach ($rows as $row) {
-                array_push($auctions, new Auction(array(
-                    'id' => $row['id'],
-                    'sectionId' =>  $row['sectionid'],
-                    'customerId' => $row['customerid'],
-                    'productId' => $row['productid'],
-                    'startDate' => $row['startdate'],
-                    'endDate' => $row['enddate']
-                )));
-            }
-
-            return $auctions;
-        }
-        
-        return null;
+        return self::handle_rows($rows);
     }
     
     
@@ -147,24 +78,7 @@ class Auction extends BaseModel {
         $query->execute(array('id' => $id));
 
         $rows = $query->fetchAll();
-        $auctions = array();
-
-        if (!empty($rows)) {
-            foreach ($rows as $row) {
-                array_push($auctions, new Auction(array(
-                    'id' => $row['id'],
-                    'sectionId' =>  $row['sectionid'],
-                    'customerId' => $row['customerid'],
-                    'productId' => $row['productid'],
-                    'startDate' => $row['startdate'],
-                    'endDate' => $row['enddate']
-                )));
-            }
-
-            return $auctions;
-        }
-        
-        return null;
+        return self::handle_rows($rows);
     }
     
     public static function allWhereCustomerHasBids($id){
@@ -173,24 +87,7 @@ class Auction extends BaseModel {
                 . 'WHERE Bid.auctionid = Auction.id AND Bid.customerid = :id');
         $query->execute(array('id'=>$id));
         $rows = $query->fetchAll();
-        $auctions = array();
-
-        if (!empty($rows)) {
-            foreach ($rows as $row) {
-                array_push($auctions, new Auction(array(
-                    'id' => $row['id'],
-                    'sectionId' =>  $row['sectionid'],
-                    'customerId' => $row['customerid'],
-                    'productId' => $row['productid'],
-                    'startDate' => $row['startdate'],
-                    'endDate' => $row['enddate']
-                )));
-            }
-
-            return $auctions;
-        }
-        
-        return null;
+        return self::handle_rows($rows);
     }
     
     public function save(){
@@ -207,6 +104,27 @@ class Auction extends BaseModel {
     public function destroy(){
         $query = DB::connection()->prepare('DELETE FROM Auction WHERE id=:id');
         $query->execute(array('id'=>$this->id));
+    }
+    
+    private static function handle_rows($rows){
+        $auctions = array();
+        
+        if (!empty($rows)) {
+            foreach ($rows as $row) {
+                array_push($auctions, new Auction(array(
+                    'id' => $row['id'],
+                    'sectionId' =>  $row['sectionid'],
+                    'customerId' => $row['customerid'],
+                    'productId' => $row['productid'],
+                    'startDate' => $row['startdate'],
+                    'endDate' => $row['enddate']
+                )));
+            }
+
+            return $auctions;
+        }
+        
+        return null;
     }
     
     public function is_handled(){

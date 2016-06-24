@@ -15,10 +15,10 @@
 <form method="post" action="{{base_path}}/section/{{attributes.id}}/edit">
     <div class="form-group">
         <label>Nimi</label>
-        <input name="name" class="form-control" type="text">{{attributes.name}}</input>
+        <input name="name" class="form-control" type="text" value="{{attributes.name}}"></input>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Lähetä</button>
+        <button type="submit" class="btn btn-primary">Tallenna</button>
     </div>
 </form>
 {% endblock %}
