@@ -118,5 +118,15 @@ class Bid extends BaseModel {
         }
         return $errors;
     }
+    
+    public function customer_name(){
+        $query = DB::connection()->prepare('SELECT Customer.name as name FROM Customer WHERE :id = id LIMIT 1');
+        $query->execute(array('id'=>$this->customerId));
+        $row = $query->fetch();
+        if($row){
+            return $row['name'];
+        }
+        return null;
+    }
 
 }

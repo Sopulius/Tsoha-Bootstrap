@@ -65,6 +65,23 @@ class AuctionListViewModel extends BaseModel {
         return null;
     }
     
+    public static function allOpenInSection($id){
+        $listView = array();
+        $auctions = Auction::allOpenInSection($id);
+        if (!empty($auctions)){
+             foreach ($auctions as $auc) {
+                $prod = Product::find($auc->productId);
+                $bid = Bid::findHighestBid($auc->id);
+                array_push($listView, 
+                     new AuctionListViewModel(array('auction' => $auc,
+                    'product' => $prod,
+                    'highestBid' => $bid)));
+            }
+            return $listView;
+        }
+        return null;
+    }
+    
     public static function allClosed(){
         $listView = array();
         $auctions = Auction::allClosed();

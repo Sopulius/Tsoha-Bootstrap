@@ -14,6 +14,9 @@
       </ul>
     </div>
 {% endif %}
+<p>
+    <a href="{{base_path}}/section/{{view.auction.sectionId}}" class="btn btn-primary">Takaisin</a>
+</p>
   <h1>{{view.product.name}}</h1>
   <!-- Painikkeet tähän -->
   {%if user_logged_in.id == view.auction.customerId or user_logged_in.id == 1 %}
@@ -86,7 +89,7 @@
                 {%for bid in view.bids%}
                 <tr>
                     <td>
-                       {{bid.customerId}}
+                        <a href="{{base_path}}/auction/customer/{{bid.customerId}}">{{bid.customer_name}}</a>
                     </td>
                     <td>
                        {{bid.price}}€ 

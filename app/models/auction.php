@@ -72,6 +72,27 @@ class Auction extends BaseModel {
         return $auctions;
     }
     
+    public static function allOpenInSection($id){
+        $query = DB::connection()->prepare('SELECT * FROM Auction WHERE enddate > localtimestamp AND sectionid = :id ORDER BY enddate DESC');
+        $query->execute(array('id'=>$id));
+
+        $rows = $query->fetchAll();
+        $auctions = array();
+
+        foreach ($rows as $row) {
+            array_push($auctions, new Auction(array(
+                'id' => $row['id'],
+                'sectionId'=> $row['sectionid'],
+                'customerId' => $row['customerid'],
+                'productId' => $row['productid'],
+                'startDate' => $row['startdate'],
+                'endDate' => $row['enddate']
+            )));
+        }
+
+        return $auctions;
+    }
+    
     public static function allClosed(){
         $query = DB::connection()->prepare('SELECT * FROM Auction WHERE enddate < localtimestamp ORDER BY enddate DESC');
         $query->execute();

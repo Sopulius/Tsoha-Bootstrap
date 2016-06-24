@@ -15,7 +15,7 @@ class SectionViewModel extends BaseModel{
     
     public static function find($id){
         $sec = Section::find($id);
-        $auctions = AuctionListViewModel::allInSection($id);
+        $auctions = AuctionListViewModel::allOpenInSection($id);
         return new SectionViewModel(array('section'=>$sec,
             'auctionList'=>$auctions));
     }
