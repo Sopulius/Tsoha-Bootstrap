@@ -48,6 +48,10 @@ $routes->post('/register', function(){
     UserController::handle_register();
 });
 
+$routes->get('/profile', function(){
+    UserController::profile();
+});
+
 //Osastot
 $routes->post('/section', function() {
     SectionController::store();

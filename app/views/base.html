@@ -50,7 +50,7 @@
                         <li>
                             <p class="navbar-text">Kirjautuneena käyttäjänä <strong>{{user_logged_in.name}}</strong></p>
                         </li>
-                        <li><a href="#">Oma sivu</a></li>
+                        <li><a href="{{base_path}}/profile">Oma sivu</a></li>
                         {% if user_logged_in.id == 1%}
                         <li><a href="{{base_path}}/broker" class="btn btn default">Hallintapaneeli</a></li>
                         {% endif %}

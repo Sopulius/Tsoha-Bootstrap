@@ -64,5 +64,12 @@ class UserController extends BaseController {
             Redirect::to('/',array('message'=>'Rekisteröityminen onnistui!'));
         }
     }
+    
+    public static function profile(){
+        self::check_logged_in();
+        $bidAuctions = AuctionListViewModel::allWhereCustomerHasBids($_SESSION['user']);
+        $own = AuctionListViewModel::allFromCustomer($_SESSION['user']);
+        View::make('customer/profile.html',array('bidded'=>$bidAuctions, 'own'=>$own));
+    }
 
 }

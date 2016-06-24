@@ -1,16 +1,100 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+
+
+<h1>Profiili</h1>
+<div class="col-xs-7">
+    <h2 class="sub-header">Huudetut</h2>
+    <div class="table-responsive">
+         <table class="table table-striped">
+            <thead>
+            <th>Nimi</th>
+            <th>Lisätty</th>
+            <th>Sulkeutuu</th>
+            <th>Lähtöhinta</th>
+            <th>Korkein tarjous</th>
+            <th>Huudon tila</th>
+            <th>Kohteen tila</th>
+            </thead>
+            <tbody>
+                {% if bidded%}
+                {%for object in bidded%}
+                <tr>
+                    <td><a href="{{base_path}}/auction/{{object.auction.id}}">{{object.product.name}}</a></td>
+                    <td>{{object.auction.startDate}} </td>
+                    <td>{{object.auction.endDate}} </td>
+                    <td>{{object.product.startPrice}}</td>
+                    <td>{%if object.highestBid%}
+                        {{object.highestBid.price}}
+                        {%else%}
+                        <p>-</p
+                        {%endif%}
+                    </td>
+                    {%if object.highestBid.customerId == user_logged_in.id%}
+                    <td><button class="btn btn-success" disabled>Korkein</button></td>
+                    {%else%}
+                    <td><button class="btn btn-danger" disabled>Ylitetty</button></td>
+                    {%endif%}
+
+                    {%if object.auction.is_handled %}
+                    <td><button class="btn btn-primary" disabled>Vahvistettu</button></td>
+                    {%elseif object.auction.is_closed %}
+                    <td><button class="btn btn-danger" disabled>Suljettu</button></td>
+                    {%else%}
+                    <td><button class="btn btn-success" disabled>Käynnissä</button></td>
+                    {%endif%}
+                </tr>
+                {% endfor %}
+                {%else%}
+            <p>Ei näytettäviä kohteita</p>
+            {%endif%}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="col-xs-6">
+    <h2 class="sub-header">Omat kohteet</h2>
+    <div class="table-responsive">
+         <table class="table table-striped">
+            <thead>
+            <th>Nimi</th>
+            <th>Lisätty</th>
+            <th>Sulkeutuu</th>
+            <th>Lähtöhinta</th>
+            <th>Korkein tarjous</th>
+            <th>Kohteen tila</th>
+            </thead>
+            <tbody>
+                {% if own%}
+                {%for object in own%}
+                <tr>
+                    <td><a href="{{base_path}}/auction/{{object.auction.id}}">{{object.product.name}}</a></td>
+                    <td>{{object.auction.startDate}} </td>
+                    <td>{{object.auction.endDate}} </td>
+                    <td>{{object.product.startPrice}}</td>
+                    <td>{%if object.highestBid%}
+                        {{object.highestBid.price}}
+                        {%else%}
+                        <p>-</p
+                        {%endif%}
+                    </td>
+
+                    {%if object.auction.is_handled %}
+                    <td><button class="btn btn-primary" disabled>Vahvistettu</button></td>
+                    {%elseif object.auction.is_closed %}
+                    <td><button class="btn btn-danger" disabled>Suljettu</button></td>
+                    {%else%}
+                    <td><button class="btn btn-success" disabled>Käynnissä</button></td>
+                    {%endif%}
+                </tr>
+                {% endfor %}
+                {%else%}
+            <p>Ei näytettäviä kohteita</p>
+            {%endif%}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
